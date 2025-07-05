@@ -2,6 +2,43 @@
 
 Automatically normalize all audio files to broadcast standard loudness levels for consistent playback during stage performances at DFW Chinese Youth Camp.
 
+## Quick Start - macOS/Linux
+
+```bash
+# Prerequisites: Python 3 and ffmpeg must be installed
+# If not installed: brew install ffmpeg (macOS) or sudo apt install ffmpeg (Linux)
+
+# Clone and set up
+git clone https://github.com/alvinycheung/audio-normalizer.git
+cd audio-normalizer
+mkdir -p mp3s normalized
+
+# Add your audio files to the mp3s folder, then:
+python3 normalize_audio.py
+
+# Verify results
+python3 verify_audio.py
+```
+
+## Quick Start - Windows
+
+```cmd
+# Prerequisites: Python and ffmpeg must be installed
+# If not installed, see Prerequisites section below
+
+# Clone and set up
+git clone https://github.com/alvinycheung/audio-normalizer.git
+cd audio-normalizer
+mkdir mp3s
+mkdir normalized
+
+# Add your audio files to the mp3s folder, then:
+python normalize_audio.py
+
+# Verify results
+python verify_audio.py
+```
+
 ## What This Does
 
 This tool ensures all your audio files have consistent perceived loudness (-16 LUFS broadcast standard), so you can play them in sequence without adjusting volume levels. Perfect for stage performances, presentations, or any event where you need seamless audio playback.
@@ -36,96 +73,26 @@ sudo apt install ffmpeg
    - Click "OK" to save
 4. Open Command Prompt and verify: `ffmpeg -version`
 
-## Installation
-
-1. Clone this repository:
-
-**macOS/Linux:**
-```bash
-git clone https://github.com/alvinycheung/audio-normalizer.git
-cd audio-normalizer
-```
-
-**Windows (Command Prompt):**
-```cmd
-git clone https://github.com/alvinycheung/audio-normalizer.git
-cd audio-normalizer
-```
-
-2. Create the required directories:
-
-**macOS/Linux:**
-```bash
-mkdir -p mp3s normalized
-```
-
-**Windows (Command Prompt):**
-```cmd
-mkdir mp3s
-mkdir normalized
-```
-
 ## Usage
 
-### Basic Usage
-
 1. Place your audio files in the `mp3s` folder (you can create subfolders)
-2. Run the normalizer:
-
-**macOS/Linux:**
-```bash
-python3 normalize_audio.py
-```
-
-**Windows:**
-```cmd
-python normalize_audio.py
-```
-
+2. Run the normalizer script
 3. Find normalized files in the `normalized` folder with the same structure
-
-### Verify Results
-
-**macOS/Linux:**
-```bash
-python3 verify_audio.py
-```
-
-**Windows:**
-```cmd
-python verify_audio.py
-```
 
 ### Advanced Usage
 
-**macOS/Linux:**
 ```bash
 # Process a single file
-python3 normalize_audio.py "filename.mp3"
+python3 normalize_audio.py "filename.mp3"    # macOS/Linux
+python normalize_audio.py "filename.mp3"     # Windows
 
 # Verify a single file
-python3 verify_audio.py "filename.mp3"
+python3 verify_audio.py "filename.mp3"       # macOS/Linux
+python verify_audio.py "filename.mp3"        # Windows
 
 # Check loudness of original source files
-python3 verify_audio.py --source
-
-# Check a specific source file
-python3 verify_audio.py --source "filename.mp3"
-```
-
-**Windows:**
-```cmd
-# Process a single file
-python normalize_audio.py "filename.mp3"
-
-# Verify a single file
-python verify_audio.py "filename.mp3"
-
-# Check loudness of original source files
-python verify_audio.py --source
-
-# Check a specific source file
-python verify_audio.py --source "filename.mp3"
+python3 verify_audio.py --source             # macOS/Linux
+python verify_audio.py --source              # Windows
 ```
 
 ## Folder Structure
