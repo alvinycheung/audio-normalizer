@@ -1,0 +1,155 @@
+# Audio Normalizer - DFW Chinese Youth Camp
+
+Automatically normalize all audio files to broadcast standard loudness levels for consistent playback during stage performances at DFW Chinese Youth Camp.
+
+## What This Does
+
+This tool ensures all your audio files have consistent perceived loudness (-16 LUFS broadcast standard), so you can play them in sequence without adjusting volume levels. Perfect for stage performances, presentations, or any event where you need seamless audio playback.
+
+## Prerequisites
+
+- Python 3.x
+- ffmpeg with loudnorm filter support
+
+### Installing ffmpeg
+
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt update
+sudo apt install ffmpeg
+```
+
+**Windows:**
+Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
+
+## Installation
+
+1. Clone this repository:
+```bash
+git clone https://github.com/alvinycheung/audio-normalizer.git
+cd audio-normalizer
+```
+
+2. Create the required directories:
+```bash
+mkdir -p mp3s normalized
+```
+
+## Usage
+
+### Basic Usage
+
+1. Place your audio files in the `/mp3s` folder (you can create subfolders)
+2. Run the normalizer:
+```bash
+python3 normalize_audio.py
+```
+3. Find normalized files in the `/normalized` folder with the same structure
+
+### Verify Results
+```bash
+python3 verify_audio.py
+```
+
+### Advanced Usage
+
+```bash
+# Process a single file
+python3 normalize_audio.py "filename.mp3"
+
+# Verify a single file
+python3 verify_audio.py "filename.mp3"
+
+# Check loudness of original source files
+python3 verify_audio.py --source
+
+# Check a specific source file
+python3 verify_audio.py --source "filename.mp3"
+```
+
+## Folder Structure
+
+```
+audio-normalizer/
+├── mp3s/                 # Place your source audio files here
+│   ├── folder1/
+│   │   ├── track1.mp3
+│   │   └── track2.m4a
+│   └── folder2/
+│       └── track3.mp4
+├── normalized/           # Normalized files appear here (same structure)
+│   ├── folder1/
+│   │   ├── track1.mp3
+│   │   └── track2.mp3   # All outputs are MP3
+│   └── folder2/
+│       └── track3.mp3
+├── normalize_audio.py    # Main normalization script
+├── verify_audio.py       # Verification script
+└── README.md
+```
+
+## Supported Audio Formats
+
+### Input
+- **MP3** (.mp3, .MP3)
+- **M4A** (.m4a) - Apple's audio format
+- **MP4** (.mp4) - When containing audio
+- **WAV** (.wav) - Uncompressed audio
+- **FLAC** (.flac) - Lossless compression
+- **AAC** (.aac) - Advanced Audio Coding
+- **OGG** (.ogg) - Open source format
+- **WMA** (.wma) - Windows Media Audio
+
+### Output
+All files are converted to MP3 format (192 kbps, 44.1 kHz) for maximum compatibility.
+
+## Technical Details
+
+- **Target Loudness**: -16 LUFS (integrated)
+- **Loudness Range**: 7 LU
+- **True Peak**: -1 dBTP (prevents clipping)
+- **Output Format**: MP3, 192 kbps, 44.1 kHz
+
+## Features
+
+- **LUFS Normalization**: Uses broadcast standard -16 LUFS for consistent loudness
+- **Preserves Folder Structure**: Mirrors your organization from `/mp3s` to `/normalized`
+- **Non-Destructive**: Original files remain untouched
+- **Progress Tracking**: Clear visual feedback during processing
+- **Two-Pass Processing**: Analyzes then normalizes for best quality
+- **Skip Existing**: Won't re-process already normalized files
+- **Real-time Verification**: See compliance status for each file
+
+## Troubleshooting
+
+### "No audio files found"
+- Make sure your files are in the `/mp3s` folder
+- Check that files have supported extensions
+
+### "ffmpeg not found"
+- Install ffmpeg using the instructions above
+- Make sure ffmpeg is in your system PATH
+
+### "JSON parsing error" or corrupted metadata
+- Some files may have corrupted metadata. The script will attempt single-pass normalization
+- For persistent issues, try cleaning the file:
+```bash
+ffmpeg -i "input.mp3" -c:a mp3 -map_metadata -1 "output.mp3"
+```
+
+### Silent or -99 LUFS files
+- These files have no detectable audio content
+- Check if the source file is corrupted or intentionally silent
+
+## Contributing
+
+Feel free to submit issues or pull requests. This tool was created for DFW Chinese Youth Camp but can be used by anyone needing consistent audio normalization.
+
+## License
+
+This project is open source and available under the MIT License.
