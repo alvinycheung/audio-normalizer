@@ -8,8 +8,9 @@ This tool ensures all your audio files have consistent perceived loudness (-16 L
 
 ## Prerequisites
 
-- Python 3.x
+- Python 3.x (Windows users: download from [python.org](https://www.python.org/downloads/))
 - ffmpeg with loudnorm filter support
+- Git (Windows users: download from [git-scm.com](https://git-scm.com/download/win))
 
 ### Installing ffmpeg
 
@@ -25,39 +26,79 @@ sudo apt install ffmpeg
 ```
 
 **Windows:**
-Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
+1. Download ffmpeg from [ffmpeg.org](https://ffmpeg.org/download.html)
+2. Extract the zip file to `C:\ffmpeg`
+3. Add ffmpeg to PATH:
+   - Right-click "This PC" → Properties → Advanced system settings
+   - Click "Environment Variables"
+   - Under "System variables", find "Path" and click "Edit"
+   - Click "New" and add `C:\ffmpeg\bin`
+   - Click "OK" to save
+4. Open Command Prompt and verify: `ffmpeg -version`
 
 ## Installation
 
 1. Clone this repository:
+
+**macOS/Linux:**
 ```bash
 git clone https://github.com/alvinycheung/audio-normalizer.git
 cd audio-normalizer
 ```
 
+**Windows (Command Prompt):**
+```cmd
+git clone https://github.com/alvinycheung/audio-normalizer.git
+cd audio-normalizer
+```
+
 2. Create the required directories:
+
+**macOS/Linux:**
 ```bash
 mkdir -p mp3s normalized
+```
+
+**Windows (Command Prompt):**
+```cmd
+mkdir mp3s
+mkdir normalized
 ```
 
 ## Usage
 
 ### Basic Usage
 
-1. Place your audio files in the `/mp3s` folder (you can create subfolders)
+1. Place your audio files in the `mp3s` folder (you can create subfolders)
 2. Run the normalizer:
+
+**macOS/Linux:**
 ```bash
 python3 normalize_audio.py
 ```
-3. Find normalized files in the `/normalized` folder with the same structure
+
+**Windows:**
+```cmd
+python normalize_audio.py
+```
+
+3. Find normalized files in the `normalized` folder with the same structure
 
 ### Verify Results
+
+**macOS/Linux:**
 ```bash
 python3 verify_audio.py
 ```
 
+**Windows:**
+```cmd
+python verify_audio.py
+```
+
 ### Advanced Usage
 
+**macOS/Linux:**
 ```bash
 # Process a single file
 python3 normalize_audio.py "filename.mp3"
@@ -70,6 +111,21 @@ python3 verify_audio.py --source
 
 # Check a specific source file
 python3 verify_audio.py --source "filename.mp3"
+```
+
+**Windows:**
+```cmd
+# Process a single file
+python normalize_audio.py "filename.mp3"
+
+# Verify a single file
+python verify_audio.py "filename.mp3"
+
+# Check loudness of original source files
+python verify_audio.py --source
+
+# Check a specific source file
+python verify_audio.py --source "filename.mp3"
 ```
 
 ## Folder Structure
